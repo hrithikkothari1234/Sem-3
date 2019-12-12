@@ -1,0 +1,67 @@
+----------------------------------------------------------------------------------
+-- Company:
+-- Engineer:
+--
+-- Create Date:    23:15:39 11/06/2019
+-- Design Name:
+-- Module Name:    decoder - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool versions:
+-- Description:
+--
+-- Dependencies:
+--
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity decoder is
+    Port ( s : in  STD_LOGIC_VECTOR (2 downto 0);
+           y : out  STD_LOGIC_VECTOR (7 downto 0));
+end decoder;
+
+architecture Behavioral of decoder is
+
+begin
+
+	process(s)
+	begin
+
+		if s="000" then
+			y<="00000001";
+		elsif s="001" then
+			y<="00000010";
+		elsif s="010" then
+			y<="00000100";
+		elsif s="011" then
+			y<="00001000";
+		elsif s="100" then
+			y<="00010000";
+		elsif s="101" then
+			y<="00100000";
+		elsif s="110" then
+			y<="00100000";
+		elsif s="111" then
+			y<="10000000";
+		else
+			y<="00000000";
+
+		end if;
+
+	end process;
+
+end Behavioral;

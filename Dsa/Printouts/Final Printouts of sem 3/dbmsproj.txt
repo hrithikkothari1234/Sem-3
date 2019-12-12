@@ -1,0 +1,161 @@
+    DDL COMMANDS
+
+﻿CREATE TABLE Donor(Address varchar(50), Name Varchar(20) NOT NULL, Phone_no int, Age int, donor_id int primary key AUTO INCREMENT);
+create table Blood(Code int AUTO INCREMENT, cost numeric(10,2) NOT NULL, type varchar(3) NOT NULL);
+create table BloodBank(Address varchar(50), Reg_no int primary key AUTO INCREMENT)
+create table EmployeeBlood(Salary numeric(10,2) CHECK Salary>0, Designation varchar(10), E_id int primary key AUTO INCREMENT)
+create table Nominee(Name varchar(20), N_id int primary key references EmployeeBlood(E_id) )
+create table Hospital(Name varchar(20) NOT NULL, Phone_no int , Address varchar(20), H_id int AUTO INCREMENT,Patient_Details varchar(20));
+create table Manager(Name varchar(20) NOT NULL, Address varchar(20), Email varchar(100), Phone_no int, Gender varchar(20) CHECK Gender='M' or Gender = 'F', E_id int primary key references EmployeeBlood(E_id));
+create table Doctors(Name varchar(20) NOT NULL, Address varchar(20), Phone_no int, Specialization varchar(20), E_id int primary key references EmployeeBlood(E_id) );
+create table Nurses(Name varchar(20) NOT NULL,Phone_no int , Address varchar(20), E_id int primary key references EmployeeBlood(E_id));
+create table Receptionist(Name varchar(20) NOT NULL,Address varchar(20), Phone_no int, E_id int primary key references EmployeeBlood(E_id));
+
+insert into Donor values('Mumbai','Kamlesh',97864915,19,1001)
+insert into Donor values('Jammu','Ayush',80522220,79,5555)
+insert into Donor values('Mumbai','Tiktik',888888888,59,5954)
+
+insert into Blood values(123,150.25,'A+');
+insert into Blood values(15,250,'O-');
+insert into Blood values(22,1000,'AB+');
+
+insert into BloodBank values('Mumbai',98986);
+insert into BloodBank values('Delhi',98987);
+
+insert into EmployeeBlood values(8000,'Doctor',1)
+insert into EmployeeBlood values(8000,'Doctor',4)
+insert into EmployeeBlood values(2500,'Nurse',2)
+insert into EmployeeBlood values(9000,'Manager',3)
+insert into EmployeeBlood values(2000,'Receptio',4)
+insert into EmployeeBlood values(0,'Nominee',12)
+insert into EmployeeBlood values(0,'Nominee',13)
+insert into EmployeeBlood values(0,'Nominee',15)
+
+insert into Nominee values('TIKTIK',15)
+insert into Nominee values('TUKTUK',13)
+insert into Nominee values('TAKTAK',12)
+insert into Hospital values('Royal',2804252,'Mumbai',4578,'Cancer Patient')
+insert into Hospital values('Tata',5595959,'Agra',4576,'Mental patient')
+insert into Receptionist values('Aksh','Mumbai',989898,4)
+insert into Nurses values('Robin',54487,'Delhi',2)
+insert into Doctors values('Dr.Ayush','Jammu',78787878,'Neurologist',1)
+insert into Doctors values ('Dr.Kamlesh','Mumbai',797979,'Cardiologist',2)
+insert into Doctors values ('Dr.Hritik','Mumbai',7575755,'Dentist',3)
+insert into Manager values ('Rahul','Mumbai','rahulpu','96742135','Male','35646483')
+
+    Joins
+
+Select * from BloodBank natural joins EmployeeBlood on BloodBank.Reg_no=EmployeeBlood.E_id;
+Select * from BloodBank left joins EmployeeBlood;
+Select * from BloodBank right joins EmployeeBlood;
+Select * from BloodBank cross joins EmployeeBlood;
+
+    Triggers
+
+Create Trigger bloodbank_trigger before delete on Bloodbank
+for each row Execute Procedure TriggBank();
+
+Create  or Replace function TriggBank()
+returns trigger as
+$$
+begin
+raise notice 'Deletion not allowed';
+return null;
+end $$
+plpgsql;
+
+Create Trigger Hospital_trigger before delete on Hospital
+for each row Execute Procedure hospProcedure();
+
+Create  or Replace function hospProcedure()
+returns trigger as
+$$
+begin
+raise notice 'Deletion not allowed';
+return null;
+end $$
+plpgsql;
+
+Create Trigger Manager_trigger before delete on Manager
+for each row Execute Procedure ManagerProcedure();
+
+Create  or Replace function ManagerProcedure()
+returns trigger as
+$$
+begin
+raise notice 'Deletion not allowed';
+return null;
+end $$
+plpgsql;
+
+    DML Commands
+Update Hospital set Name="Dr Bhadra" where H_id = 4578;
+Update Hospital set Name="Lassun" where H_id = 4576;
+Update Manager set Name="Hritik" where E_id = 3;
+Update Manager set Name="Kamlesh" where E_id = 5;
+
+
+    Cursors
+do
+$$
+Declare
+hosp_cur cursor for select * from Hospital;
+hosp_name Hospital%ROWTYPE;
+Begin
+open hosp_cur;
+Loop
+Fetch hosp_cur into hosp_name;
+exit when not found
+raise notice '%',Name;
+end loop
+end$$
+plpgsql;
+
+    Aggregate functions
+Select max(Salary) from EmployeeBlood;
+Select min(Salary) from EmployeeBlood;
+Select count(*) from Donor;
+Select count(*) from Doctors;
+Select count(*) from Nurses;
+Select count(*) from Manager;
+
+    Views
+Create view hospview AS
+    Select * From Hospital;
+Create view Empview As
+    Select * from EmployeeBlood;
+Create view Managerview As
+    Select * from Manager;
+Create view Nurseview As
+    Select * from Nurses;
+Create view Nurseview As
+    Select * from Donor;
+
+    Procedures/Functions
+Create or Replace Procedure checkNurses()
+  As
+  $$
+    Declare
+        nursesavail Nurses%ROWTYPE;
+    Begin
+        Select * from Nurses into nursesavail;
+        raise notice '%',nursesavail.name;
+        raise notice '%',nursesavail.Address;
+  END$$;
+plpgsql;
+
+SELECT checkNurses();
+
+Create or Replace Procedure checkDoctors()
+  As
+  $$
+    Declare
+        Doctorsavail Doctors%ROWTYPE;
+    Begin
+        Select * from Doctors into Doctorsavail;
+        raise notice '%',Doctorsavail.name;
+        raise notice '%',Doctorsavail.Address;
+  END$$;
+plpgsql;
+
+SELECT checkDoctors();

@@ -1,0 +1,57 @@
+----------------------------------------------------------------------------------
+-- Company:
+-- Engineer:
+--
+-- Create Date:    17:31:23 11/07/2019
+-- Design Name:
+-- Module Name:    counte4bit - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool versions:
+-- Description:
+--
+-- Dependencies:
+--
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_unsigned.all;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity counte4bit is
+    Port ( clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           q : out  STD_LOGIC_VECTOR (3 downto 0));
+end counte4bit;
+
+architecture Behavioral of counte4bit is
+
+begin
+
+	process(clk,rst)
+	variable temp : STD_LOGIC_VECTOR (3 downto 0);
+
+	begin
+
+		 if(rst = '1') then
+		 temp:="0000";
+		 elsif(clk'event and clk='1') then
+		 temp:=temp+1;
+		 end if;
+		 q<=temp;
+
+	end process;
+
+end Behavioral;

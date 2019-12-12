@@ -1,0 +1,23 @@
+			HV's Social Media App
+	
+An app created by implementing various data structures in C that can help connect 
+strangers , friends , family , far-away relatives ,etc. They can Register , 
+Login and then add other registered users as friends.
+There's an option for logging into the admin panel which is restricted only to the 
+admin and the admin can remove registered users i.e. delete their accounts permanently.
+Some features that are going to be added to this app : Adding posts , sending messages , 
+and a lot more!
+
+Stay tuned!
+
+Data Structures Used :
+->Linked List of Registered Users.
+->char arrays ( Strings ) of details of the users.
+->int array to store who is a friend of who.
+
+Made by -
+1.Hritik Kothari - 8677.
+2.Varad Patil - 8688.
+
+Thankyou.
+

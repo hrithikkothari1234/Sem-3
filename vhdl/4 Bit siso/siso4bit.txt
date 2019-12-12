@@ -1,0 +1,59 @@
+----------------------------------------------------------------------------------
+-- Company:
+-- Engineer:
+--
+-- Create Date:    18:29:03 11/07/2019
+-- Design Name:
+-- Module Name:    siso - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool versions:
+-- Description:
+--
+-- Dependencies:
+--
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity siso is
+    Port ( d : in  STD_LOGIC;
+           clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           q : out  STD_LOGIC);
+end siso;
+
+architecture Behavioral of siso is
+
+begin
+
+	process(clk,rst)
+
+	variable internal: STD_LOGIC_VECTOR(3 downto 0);
+
+	begin
+
+		if(rst = '1') then
+			internal:="0000";
+		elsif(clk'event and clk='1') then
+			internal:= (d & internal(3 downto 1));
+		end if;
+
+		q<=internal(0);
+
+	end process;
+
+end Behavioral;

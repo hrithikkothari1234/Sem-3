@@ -1,0 +1,79 @@
+----------------------------------------------------------------------------------
+-- Company:
+-- Engineer:
+--
+-- Create Date:    20:58:29 11/06/2019
+-- Design Name:
+-- Module Name:    mux16to1 - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool versions:
+-- Description:
+--
+-- Dependencies:
+--
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux16to1 is
+    Port ( x : in  STD_LOGIC_VECTOR (15 downto 0);
+           s : in  STD_LOGIC_VECTOR (3 downto 0);
+           y : out  STD_LOGIC);
+end mux16to1;
+
+architecture Behavioral of mux16to1 is
+begin
+process(x,s)
+   begin
+
+    if(s="0000")then
+    y<=x(0);
+       elsif(s="0001")then
+    y<=x(1);
+       elsif(s="0010")then
+    y<=x(2);
+       elsif(s="0011")then
+    y<=x(3);
+       elsif(s="0100")then
+    y<=x(4);
+       elsif(s="0101")then
+    y<=x(5);
+       elsif(s="0110")then
+    y<=x(6);
+       elsif(s="0111")then
+    y<=x(7);
+       elsif(s="1000")then
+    y<=x(8);
+       elsif(s="1001")then
+    y<=x(9);
+       elsif(s="1010")then
+    y<=x(10);
+       elsif(s="1011")then
+    y<=x(11);
+       elsif(s="1100")then
+    y<=x(12);
+       elsif(s="1101")then
+    y<=x(13);
+       elsif(s="1110")then
+    y<=x(14);
+       else
+    y<=x(15);
+  end if ;
+
+ end process ;
+
+end Behavioral;
